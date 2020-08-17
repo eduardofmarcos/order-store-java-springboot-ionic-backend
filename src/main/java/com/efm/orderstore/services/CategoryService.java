@@ -1,9 +1,12 @@
 package com.efm.orderstore.services;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.efm.orderstore.domains.Category;
 import com.efm.orderstore.repositories.CategoryRepository;
+import com.efm.orderstore.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoryService {
@@ -13,7 +16,8 @@ public class CategoryService {
 	
 	public Category findById(Integer id) {
 		Optional<Category> obj = categoryRepository.findById(id);
-		return obj.orElse(null);
-	}
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+		"Object not found. Id: " + id + ", Type: " + Category.class.getName()));
+		}
 	
 }
