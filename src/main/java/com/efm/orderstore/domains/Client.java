@@ -39,6 +39,9 @@ public class Client implements Serializable {
 	@CollectionTable(name = "phone")
 	private Set<String> phoneList = new HashSet<>();
 
+	@OneToMany(mappedBy="client")
+	private List<OrderCli> orders = new ArrayList<>();
+
 	public Client() {
 	}
 
@@ -107,6 +110,14 @@ public class Client implements Serializable {
 		this.phoneList = phoneList;
 	}
 
+	public List<OrderCli> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<OrderCli> orders) {
+		this.orders = orders;
+	};
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -130,6 +141,6 @@ public class Client implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	};
+	}
 
 }
