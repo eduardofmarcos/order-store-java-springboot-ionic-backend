@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.efm.orderstore.domains.enums.ClientType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Client implements Serializable {
@@ -29,11 +30,13 @@ public class Client implements Serializable {
 	private String cpfOrCnpj;
 	private Integer clientType;
 
-	@OneToMany(mappedBy="client")
+	@JsonManagedReference // pega os clients e exibe os referidos endereços dos clientes, os endereços e
+							// os clientes Clientes>endereços nao Endereços>clientes
+	@OneToMany(mappedBy = "client")
 	private List<Address> addresses = new ArrayList<>();
-	
+
 	@ElementCollection
-	@CollectionTable(name="phone")
+	@CollectionTable(name = "phone")
 	private Set<String> phoneList = new HashSet<>();
 
 	public Client() {
