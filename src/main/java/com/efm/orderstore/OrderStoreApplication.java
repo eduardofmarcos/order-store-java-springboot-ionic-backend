@@ -14,6 +14,7 @@ import com.efm.orderstore.domains.City;
 import com.efm.orderstore.domains.Client;
 import com.efm.orderstore.domains.CreditCardPayment;
 import com.efm.orderstore.domains.OrderCli;
+import com.efm.orderstore.domains.OrderItem;
 import com.efm.orderstore.domains.Payment;
 import com.efm.orderstore.domains.PaymentSlip;
 import com.efm.orderstore.domains.Product;
@@ -24,6 +25,7 @@ import com.efm.orderstore.repositories.AddressRepository;
 import com.efm.orderstore.repositories.CategoryRepository;
 import com.efm.orderstore.repositories.CityRepository;
 import com.efm.orderstore.repositories.ClientRepository;
+import com.efm.orderstore.repositories.OrderItemRepository;
 import com.efm.orderstore.repositories.OrderRepository;
 import com.efm.orderstore.repositories.PaymentRepository;
 import com.efm.orderstore.repositories.ProductRepository;
@@ -48,6 +50,8 @@ public class OrderStoreApplication implements CommandLineRunner {
 	private OrderRepository orderRepository;
 	@Autowired
 	private PaymentRepository paymentRepository;
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(OrderStoreApplication.class, args);
@@ -113,6 +117,19 @@ public class OrderStoreApplication implements CommandLineRunner {
 		
 		orderRepository.saveAll(Arrays.asList(o1,o2));
 		paymentRepository.saveAll(Arrays.asList(pay1,pay2));
+		
+		OrderItem oi1 = new OrderItem(o1, p1, 0.00, 1, 2.000);
+		OrderItem oi2 = new OrderItem(o1, p3, 0.00, 2, 80.00);
+		OrderItem oi3 = new OrderItem(o2, p2, 100.00, 1, 800.00);
+		
+		o1.getOrderItems().addAll(Arrays.asList(oi1,oi2));
+		o2.getOrderItems().addAll(Arrays.asList(oi3));
+		
+		p1.getOrderItems().addAll(Arrays.asList(oi1));
+		p2.getOrderItems().addAll(Arrays.asList(oi3));
+		p3.getOrderItems().addAll(Arrays.asList(oi2));
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3));
 	}
 
 }
