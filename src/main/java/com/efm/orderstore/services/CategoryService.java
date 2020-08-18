@@ -2,11 +2,14 @@ package com.efm.orderstore.services;
 
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.efm.orderstore.domains.Category;
 import com.efm.orderstore.repositories.CategoryRepository;
+import com.efm.orderstore.services.exceptions.DataIntegrityException;
 import com.efm.orderstore.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -30,5 +33,14 @@ public class CategoryService {
 		findById(obj.getId());
 		return categoryRepository.save(obj);
 
+	}
+
+	public void delete(Integer id) {
+		findById(id);
+		try {
+		categoryRepository.deleteById(id);
+		}catch (DataIntegrityViolationException e){
+			throw new DataIntegrityException("It is not possible to delete a category with associated products");
+		}
 	}
 }
