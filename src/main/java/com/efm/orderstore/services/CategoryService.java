@@ -1,7 +1,7 @@
 package com.efm.orderstore.services;
 
+import java.util.List;
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,6 +22,10 @@ public class CategoryService {
 		Optional<Category> obj = categoryRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found. Id: " + id + ", Type: " + Category.class.getName()));
+	}
+	
+	public List<Category> findAll() {
+		return categoryRepository.findAll();
 	}
 
 	public Category insert(Category obj) {

@@ -1,6 +1,9 @@
 package com.efm.orderstore.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.efm.orderstore.domains.Category;
+import com.efm.orderstore.dto.CategoryDTO;
 import com.efm.orderstore.services.CategoryService;
 
 @RestController
@@ -47,5 +51,12 @@ public class CategoryResource {
 	private ResponseEntity<?> delete(@PathVariable Integer id) {
 		categoryService.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping
+	private ResponseEntity<List<CategoryDTO>> findAll() {
+		List<Category> objList = categoryService.findAll();
+		List<CategoryDTO> categoryDTOList = objList.stream().map(el->new CategoryDTO(el)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(categoryDTOList);
 	}
 }
