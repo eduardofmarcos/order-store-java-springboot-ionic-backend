@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.efm.orderstore.domains.enums.ClientType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -39,6 +40,7 @@ public class Client implements Serializable {
 	@CollectionTable(name = "phone")
 	private Set<String> phoneList = new HashSet<>();
 
+	@JsonBackReference
 	@OneToMany(mappedBy="client")
 	private List<OrderCli> orders = new ArrayList<>();
 

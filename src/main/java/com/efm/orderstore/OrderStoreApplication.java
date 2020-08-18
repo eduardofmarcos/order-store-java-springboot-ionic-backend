@@ -26,7 +26,7 @@ import com.efm.orderstore.repositories.CategoryRepository;
 import com.efm.orderstore.repositories.CityRepository;
 import com.efm.orderstore.repositories.ClientRepository;
 import com.efm.orderstore.repositories.OrderItemRepository;
-import com.efm.orderstore.repositories.OrderRepository;
+import com.efm.orderstore.repositories.OrderCliRepository;
 import com.efm.orderstore.repositories.PaymentRepository;
 import com.efm.orderstore.repositories.ProductRepository;
 import com.efm.orderstore.repositories.StateRepository;
@@ -47,7 +47,7 @@ public class OrderStoreApplication implements CommandLineRunner {
 	@Autowired
 	private ClientRepository clientRepository;
 	@Autowired
-	private OrderRepository orderRepository;
+	private OrderCliRepository orderRepository;
 	@Autowired
 	private PaymentRepository paymentRepository;
 	@Autowired
