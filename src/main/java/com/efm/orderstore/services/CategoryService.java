@@ -3,7 +3,6 @@ package com.efm.orderstore.services;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -12,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.efm.orderstore.domains.Category;
+import com.efm.orderstore.domains.Client;
 import com.efm.orderstore.dto.CategoryDTO;
 import com.efm.orderstore.repositories.CategoryRepository;
 import com.efm.orderstore.services.exceptions.DataIntegrityException;
@@ -28,7 +28,7 @@ public class CategoryService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found. Id: " + id + ", Type: " + Category.class.getName()));
 	}
-	
+
 	public List<Category> findAll() {
 		return categoryRepository.findAll();
 	}
@@ -39,25 +39,30 @@ public class CategoryService {
 	}
 
 	public Category update(Category obj) {
-		findById(obj.getId());
-		return categoryRepository.save(obj);
+		Category newObj = findById(obj.getId());
+		updateDate(newObj, obj);
+		return categoryRepository.save(newObj);
 
+	}
+
+	private void updateDate(Category newObj, Category obj) {
+		newObj.setName(obj.getName());
 	}
 
 	public void delete(Integer id) {
 		findById(id);
 		try {
-		categoryRepository.deleteById(id);
-		}catch (DataIntegrityViolationException e){
+			categoryRepository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("It is not possible to delete a category with associated products");
 		}
 	}
-	
-	public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+
+	public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return categoryRepository.findAll(pageRequest);
 	}
-	
+
 	public Category fromDTO(CategoryDTO objDTO) {
 		return new Category(objDTO.getId(), objDTO.getName());
 	}
