@@ -62,6 +62,14 @@ public class OrderStoreApplication implements CommandLineRunner {
 
 		Category category1 = new Category(null, "Informatica");
 		Category category2 = new Category(null, "Eletronica");
+		Category category3 = new Category(null, "Cama");
+		Category category4 = new Category(null, "Mesa");
+		Category category5 = new Category(null, "Banho");
+		Category category6 = new Category(null, "Perfumes");
+		Category category7 = new Category(null, "Roupas");
+		Category category8 = new Category(null, "Acessorios");
+		Category category9 = new Category(null, "Sofas");
+		Category category10 = new Category(null, "Bazar");
 
 		Product p1 = new Product(null, "Computador", 2000.0);
 		Product p2 = new Product(null, "Mouse", 80.0);
@@ -74,7 +82,7 @@ public class OrderStoreApplication implements CommandLineRunner {
 		p2.getCategories().addAll(Arrays.asList(category1, category2));
 		p3.getCategories().addAll(Arrays.asList(category1));
 
-		categoryRepository.saveAll(Arrays.asList(category1, category2));
+		categoryRepository.saveAll(Arrays.asList(category1, category2,category3,category4,category5,category6,category7,category8,category9,category10));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 
 		State s1 = new State(null, "Minas Gerais");
