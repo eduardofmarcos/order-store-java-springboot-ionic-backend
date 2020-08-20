@@ -2,20 +2,37 @@ package com.efm.orderstore.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.efm.orderstore.services.validations.ClientInsert;
+
+@ClientInsert
 public class ClientNewDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	
+	@NotEmpty(message="This field cannot be empty")
+	@Length(min = 5, max = 120, message="Minimum size 5, Max size 120")
 	private String name;
+	@NotEmpty(message="This field cannot be empty")
+	@Email(message = "Invalid email")
 	private String email;
+	@NotEmpty(message="This field cannot be empty")
 	private String cpfOrCnpj;
 	private Integer clientType;
-	
+	@NotEmpty(message="This field cannot be empty")
 	private String street;
+	@NotEmpty(message="This field cannot be empty")
 	private String number;
 	private String complement;
+	@NotEmpty(message="This field cannot be empty")
 	private String district;
+	@NotEmpty(message="This field cannot be empty")
 	private String cep;
-	
+	@NotEmpty(message="This field cannot be empty")
 	private String phone1;
 	private String phone2;
 	private String phone3;
