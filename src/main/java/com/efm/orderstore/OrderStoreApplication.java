@@ -74,16 +74,30 @@ public class OrderStoreApplication implements CommandLineRunner {
 		Product p1 = new Product(null, "Computador", 2000.0);
 		Product p2 = new Product(null, "Mouse", 80.0);
 		Product p3 = new Product(null, "TV", 1500.0);
+		Product p4 = new Product(null, "Mesa", 2000.0);
+		Product p5 = new Product(null, "Toalha", 80.0);
+		Product p6 = new Product(null, "Cafeteira", 1500.0);
+		Product p7 = new Product(null, "Maquina de lavar", 2000.0);
+		Product p8 = new Product(null, "Sofa", 80.0);
+		Product p9 = new Product(null, "Cama", 1500.0);
+		Product p10 = new Product(null, "Bule", 2000.0);
 
 		category1.getProducts().addAll(Arrays.asList(p1, p2, p3));
-		category2.getProducts().addAll(Arrays.asList(p2));
+		category2.getProducts().addAll(Arrays.asList(p2,p4));
+		category3.getProducts().addAll(Arrays.asList(p5,p6));
+		category4.getProducts().addAll(Arrays.asList(p6,p7,p8));
 
 		p1.getCategories().addAll(Arrays.asList(category1));
 		p2.getCategories().addAll(Arrays.asList(category1, category2));
 		p3.getCategories().addAll(Arrays.asList(category1));
+		p4.getCategories().addAll(Arrays.asList(category2));
+		p5.getCategories().addAll(Arrays.asList(category3));
+		p6.getCategories().addAll(Arrays.asList(category3));
+		p7.getCategories().addAll(Arrays.asList(category4));
+		p8.getCategories().addAll(Arrays.asList(category4));
 
 		categoryRepository.saveAll(Arrays.asList(category1, category2,category3,category4,category5,category6,category7,category8,category9,category10));
-		productRepository.saveAll(Arrays.asList(p1, p2, p3));
+		productRepository.saveAll(Arrays.asList(p1, p2, p3,p4,p5,p6,p7,p8));
 
 		State s1 = new State(null, "Minas Gerais");
 		State s2 = new State(null, "Sao paulo");
