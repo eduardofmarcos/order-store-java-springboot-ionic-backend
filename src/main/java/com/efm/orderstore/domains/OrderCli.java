@@ -25,24 +25,22 @@ public class OrderCli implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date instant;
 
-	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="order")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
-	
 
 	@ManyToOne
-	@JoinColumn(name="client_id")
+	@JoinColumn(name = "client_id")
 	private Client client;
-	
+
 	@ManyToOne
-	@JoinColumn(name="delivery_address_id")
+	@JoinColumn(name = "delivery_address_id")
 	private Address deliveryAddress;
-	
-	@OneToMany(mappedBy="id.orderCli")
+
+	@OneToMany(mappedBy = "id.orderCli")
 	private Set<OrderItem> orderItems = new HashSet<>();
 
 	public OrderCli() {
@@ -54,6 +52,15 @@ public class OrderCli implements Serializable {
 		this.instant = instant;
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
+	}
+
+	public Double getTotalValue() {
+		Double sum = 0.0;
+		for (OrderItem order : orderItems) {
+			sum +=order.getSubTotal();
+		}
+		return sum;
+
 	}
 
 	public Integer getId() {
@@ -95,7 +102,7 @@ public class OrderCli implements Serializable {
 	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
-	
+
 	public Set<OrderItem> getOrderItems() {
 		return orderItems;
 	}
@@ -128,7 +135,5 @@ public class OrderCli implements Serializable {
 			return false;
 		return true;
 	}
-
-
 
 }
