@@ -39,9 +39,17 @@ public class OrderItem implements Serializable{
 	public OrderCli getOrderCli() {
 		return id.getOrderCli();
 	}
+	
+	public void setOrderCli(OrderCli orderCli) {
+		id.setOrderCli(orderCli);
+	}
 
 	public Product getProduct() {
 		return id.getProduct();
+	}
+	
+	public void setProduct(Product product) {
+		id.setProduct(product);
 	}
 
 	public OrderItemPK getId() {
