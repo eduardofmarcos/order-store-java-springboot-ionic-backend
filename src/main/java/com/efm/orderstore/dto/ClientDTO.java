@@ -2,13 +2,16 @@ package com.efm.orderstore.dto;
 
 import java.io.Serializable;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
 import com.efm.orderstore.domains.Client;
+import com.efm.orderstore.services.validations.ClientUpdate;
 
+@ClientUpdate
 public class ClientDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
