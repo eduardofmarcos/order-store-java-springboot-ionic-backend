@@ -83,7 +83,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<release>11</release>  <!--or <release>10</release> -->
+					<source>11</source>   <!-- maven.compiler.source -->
+					<target>11</target> <!-- maven.compiler.target -->
 				</configuration>
 			</plugin>
 		</plugins>
