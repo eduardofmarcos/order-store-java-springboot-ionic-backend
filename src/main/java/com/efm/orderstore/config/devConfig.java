@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.efm.orderstore.services.DBService;
+import com.efm.orderstore.services.EmailService;
+import com.efm.orderstore.services.SMTPEmailService;
 
 @Configuration
 @Profile("dev")
@@ -27,6 +29,11 @@ public class devConfig {
 		}
 		dbService.instantiateDatabase();
 		return true;
+	}
+	
+	@Bean 
+	public EmailService emailService() {
+		return new SMTPEmailService();
 	}
 	
 }
