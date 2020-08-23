@@ -68,7 +68,7 @@ public class OrderCliService {
 		
 		oderItemRepository.saveAll(obj.getOrderItems());
 		
-		emailService.sendOrderConfirmationEmail(obj);
+		emailService.sendOrderConfirmationHtmlEmail(obj);
 		
 		return obj;
 	}
