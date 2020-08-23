@@ -1,6 +1,8 @@
 package com.efm.orderstore.domains;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -8,19 +10,20 @@ import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class OrderItem implements Serializable{
+public class OrderItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@JsonIgnore
 	@EmbeddedId
 	private OrderItemPK id = new OrderItemPK();
-	
+
 	private Double discount;
 	private Integer quantity;
 	private Double price;
-	
-	public OrderItem() {}
+
+	public OrderItem() {
+	}
 
 	public OrderItem(OrderCli orderCli, Product product, Double discount, Integer quantity, Double price) {
 		super();
@@ -30,16 +33,16 @@ public class OrderItem implements Serializable{
 		this.quantity = quantity;
 		this.price = price;
 	}
-	
+
 	public Double getSubTotal() {
-		return (price - discount)*quantity;
+		return (price - discount) * quantity;
 	}
-	
+
 	@JsonIgnore
 	public OrderCli getOrderCli() {
 		return id.getOrderCli();
 	}
-	
+
 	public void setOrderCli(OrderCli orderCli) {
 		id.setOrderCli(orderCli);
 	}
@@ -47,7 +50,7 @@ public class OrderItem implements Serializable{
 	public Product getProduct() {
 		return id.getProduct();
 	}
-	
+
 	public void setProduct(Product product) {
 		id.setProduct(product);
 	}
@@ -107,8 +110,22 @@ public class OrderItem implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduct().getName());
+		builder.append(", Qte: ");
+		builder.append(getQuantity());
+		builder.append(", Preço unitario: ");
+		builder.append(nf.format(getPrice()));
+		builder.append(", Subtotal: ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n");
+		return builder.toString();
 	};
-	
-	
-	
+
 }

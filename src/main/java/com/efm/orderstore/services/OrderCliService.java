@@ -32,6 +32,9 @@ public class OrderCliService {
 	private ProductService productService;
 	
 	@Autowired
+	private ClientService clientService;
+	
+	@Autowired
 	private OrderItemRepository oderItemRepository;
 	
 	public OrderCli findById(Integer id) {
@@ -45,6 +48,7 @@ public class OrderCliService {
 		
 		obj.setId(null);
 		obj.setInstant(new Date());
+		obj.setClient(clientService.findById(obj.getClient().getId()));
 		obj.getPayment().setPaymentStatus(PaymentStatus.PENDING);
 		obj.getPayment().setOrder(obj);
 		if(obj.getPayment() instanceof PaymentSlip) {
@@ -55,11 +59,15 @@ public class OrderCliService {
 		paymentRepository.save(obj.getPayment());
 		for(OrderItem oi: obj.getOrderItems()) {
 			oi.setDiscount(0.0);
-			oi.setPrice(productService.findById(oi.getProduct().getId()).getPrice());
+			oi.setProduct(productService.findById(oi.getProduct().getId()));
+			oi.setPrice(oi.getProduct().getPrice());
 			oi.setOrderCli(obj);
 		}
 		
 		oderItemRepository.saveAll(obj.getOrderItems());
+		
+		System.out.println(obj);
+		
 		return obj;
 	}
 	
