@@ -21,6 +21,8 @@ import com.efm.orderstore.services.exceptions.ObjectNotFoundException;
 public class OrderCliService {
 	
 	@Autowired
+	private EmailService emailService;
+	@Autowired
 	private OrderCliRepository orderCliRepository;
 	
 	@Autowired 
@@ -66,7 +68,7 @@ public class OrderCliService {
 		
 		oderItemRepository.saveAll(obj.getOrderItems());
 		
-		System.out.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		
 		return obj;
 	}
