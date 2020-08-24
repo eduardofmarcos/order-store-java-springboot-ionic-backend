@@ -17,6 +17,7 @@ public class ClientNewDTO implements Serializable {
 	@NotEmpty(message = "This field cannot be empty")
 	@Length(min = 5, max = 120, message = "Minimum size 5, Max size 120")
 	private String name;
+	
 	@NotEmpty(message = "This field cannot be empty")
 	@Email(message = "Invalid email")
 	private String email;

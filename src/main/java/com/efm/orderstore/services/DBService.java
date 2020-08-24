@@ -19,6 +19,7 @@ import com.efm.orderstore.domains.Payment;
 import com.efm.orderstore.domains.PaymentSlip;
 import com.efm.orderstore.domains.Product;
 import com.efm.orderstore.domains.State;
+import com.efm.orderstore.domains.enums.ClientProfile;
 import com.efm.orderstore.domains.enums.ClientType;
 import com.efm.orderstore.domains.enums.PaymentStatus;
 import com.efm.orderstore.repositories.AddressRepository;
@@ -113,15 +114,21 @@ public class DBService {
 
 		Client cli1 = new Client(null, "Maria Silva", "danesburrito@gmail.com", "1234234423", ClientType.PESSOAFISICA, pe.encode("batata"));
 		cli1.getPhoneList().addAll(Arrays.asList("88842388", "42398749"));
+		Client cli2 = new Client(null, "Carlos Silva", "danesburrito@gmail.com", "1234234423", ClientType.PESSOAFISICA, pe.encode("ameixa"));
+		cli2.getPhoneList().addAll(Arrays.asList("23423432", "435345534"));
+		cli2.setPerfil(ClientProfile.ADMIN);
 
 		Address addr1 = new Address(null, "Flores", "300", "asd", "saddsa", "8880280", cli1, c1);
 		Address addr2 = new Address(null, "Matos", "350", "dfg", "saddsgdfgda", "88802100", cli1, c2);
+		Address addr3 = new Address(null, "Matos", "350", "dfg", "saddsgdfgda", "88802100", cli2, c2);
 
 		cli1.getAddresses().addAll(Arrays.asList(addr1, addr2));
+		cli2.getAddresses().addAll(Arrays.asList(addr3));
 
 		clientRepository.saveAll(Arrays.asList(cli1));
+		clientRepository.saveAll(Arrays.asList(cli2));
 
-		addressRepository.saveAll(Arrays.asList(addr1, addr2));
+		addressRepository.saveAll(Arrays.asList(addr1, addr2,addr3));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
