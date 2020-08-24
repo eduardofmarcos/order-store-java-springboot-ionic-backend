@@ -10,36 +10,40 @@ import org.hibernate.validator.constraints.Length;
 import com.efm.orderstore.services.validations.ClientInsert;
 
 @ClientInsert
-public class ClientNewDTO implements Serializable{
+public class ClientNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	@NotEmpty(message="This field cannot be empty")
-	@Length(min = 5, max = 120, message="Minimum size 5, Max size 120")
+
+	@NotEmpty(message = "This field cannot be empty")
+	@Length(min = 5, max = 120, message = "Minimum size 5, Max size 120")
 	private String name;
-	@NotEmpty(message="This field cannot be empty")
+	@NotEmpty(message = "This field cannot be empty")
 	@Email(message = "Invalid email")
 	private String email;
-	@NotEmpty(message="This field cannot be empty")
+	@NotEmpty(message = "This field cannot be empty")
 	private String cpfOrCnpj;
 	private Integer clientType;
-	@NotEmpty(message="This field cannot be empty")
+	@NotEmpty(message = "This field cannot be empty")
+	private String password;
+
+	@NotEmpty(message = "This field cannot be empty")
 	private String street;
-	@NotEmpty(message="This field cannot be empty")
+	@NotEmpty(message = "This field cannot be empty")
 	private String number;
 	private String complement;
-	@NotEmpty(message="This field cannot be empty")
+	@NotEmpty(message = "This field cannot be empty")
 	private String district;
-	@NotEmpty(message="This field cannot be empty")
+	@NotEmpty(message = "This field cannot be empty")
 	private String cep;
-	@NotEmpty(message="This field cannot be empty")
+	@NotEmpty(message = "This field cannot be empty")
 	private String phone1;
 	private String phone2;
 	private String phone3;
-	
+
 	private Integer cityId;
-	
-	public ClientNewDTO() {}
+
+	public ClientNewDTO() {
+	}
 
 	public String getName() {
 		return name;
@@ -143,8 +147,14 @@ public class ClientNewDTO implements Serializable{
 
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	};
-	
-	
-	
+
 }

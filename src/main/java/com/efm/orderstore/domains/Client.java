@@ -30,6 +30,9 @@ public class Client implements Serializable {
 	private String email;
 	private String cpfOrCnpj;
 	private Integer clientType;
+	
+	@JsonIgnore
+	private String password;
 
 	 // //@JsonManagedReference pega os clients e exibe os referidos endereços dos clientes, os endereços e
 							// os clientes Clientes>endereços nao Endereços>clientes
@@ -47,13 +50,14 @@ public class Client implements Serializable {
 	public Client() {
 	}
 
-	public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType) {
+	public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.cpfOrCnpj = cpfOrCnpj;
 		this.clientType = (clientType==null) ? null : clientType.getCode();
+		this.password = password;
 	}
 
 	public Integer getId() {
@@ -119,6 +123,14 @@ public class Client implements Serializable {
 	public void setOrders(List<OrderCli> orders) {
 		this.orders = orders;
 	};
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	@Override
 	public int hashCode() {
