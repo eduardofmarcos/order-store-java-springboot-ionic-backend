@@ -4,6 +4,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.mail.SimpleMailMessage;
 
+import com.efm.orderstore.domains.Client;
 import com.efm.orderstore.domains.OrderCli;
 
 public interface EmailService {
@@ -15,5 +16,7 @@ public interface EmailService {
 	void sendOrderConfirmationHtmlEmail(OrderCli orderCli);
 
 	void sendHtmlEmail(MimeMessage msg);
+	
+	void sendNewPasswordEmail(Client client, String newPass);
 
 }
