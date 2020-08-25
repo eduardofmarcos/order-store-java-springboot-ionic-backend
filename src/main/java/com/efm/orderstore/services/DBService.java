@@ -114,7 +114,6 @@ public class DBService {
 
 		Client cli1 = new Client(null, "Maria Silva", "danesburrito@gmail.com", "1234234423", ClientType.PESSOAFISICA, pe.encode("batata"));
 		cli1.getPhoneList().addAll(Arrays.asList("88842388", "42398749"));
-		cli1.setPerfil(ClientProfile.ADMIN);
 		Client cli2 = new Client(null, "Carlos Silva", "joao@gmail.com", "1234234423", ClientType.PESSOAFISICA, pe.encode("ameixa"));
 		cli2.getPhoneList().addAll(Arrays.asList("23423432", "435345534"));
 		cli2.setPerfil(ClientProfile.ADMIN);

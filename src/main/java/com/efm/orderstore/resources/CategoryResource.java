@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,10 +34,11 @@ public class CategoryResource {
 	CategoryService categoryService;
 
 	@GetMapping(value = "/{id}")
-	private ResponseEntity<?> findById(@PathVariable Integer id) {
+	public ResponseEntity<?> findById(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(categoryService.findById(id));
 	}
 
+	@PostAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO objDTO) {
 		Category obj = categoryService.fromDTO(objDTO);
@@ -44,6 +47,7 @@ public class CategoryResource {
 		return ResponseEntity.created(uri).build();
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CategoryDTO objDTO) {
 		Category obj = categoryService.fromDTO(objDTO);
@@ -52,6 +56,7 @@ public class CategoryResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	private ResponseEntity<?> delete(@PathVariable Integer id) {
 		categoryService.delete(id);
@@ -59,14 +64,14 @@ public class CategoryResource {
 	}
 	
 	@GetMapping
-	private ResponseEntity<List<CategoryDTO>> findAll() {
+	public ResponseEntity<List<CategoryDTO>> findAll() {
 		List<Category> objList = categoryService.findAll();
 		List<CategoryDTO> categoryDTOList = objList.stream().map(el->new CategoryDTO(el)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(categoryDTOList);
 	}
 	
 	@GetMapping(value="/page")
-	private ResponseEntity<Page<CategoryDTO>> findPage(
+	public ResponseEntity<Page<CategoryDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24")Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="name")String orderBy, 
