@@ -30,11 +30,13 @@ import com.efm.orderstore.repositories.OrderCliRepository;
 import com.efm.orderstore.repositories.PaymentRepository;
 import com.efm.orderstore.repositories.ProductRepository;
 import com.efm.orderstore.repositories.StateRepository;
+import com.efm.orderstore.services.S3Service;
 
 @SpringBootApplication
 public class OrderStoreApplication implements CommandLineRunner {
 
-	
+	@Autowired
+	private S3Service s3service;
 
 	public static void main(String[] args) {
 		SpringApplication.run(OrderStoreApplication.class, args);
@@ -43,7 +45,7 @@ public class OrderStoreApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		
+		s3service.uploadFile("/home/eduardo/Desktop/bourez-surf-teahupoo.jpeg");
 	}
 
 }
