@@ -3,10 +3,13 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.efm.orderstore.domains.CreditCardPayment;
+import com.efm.orderstore.domains.Client;
 import com.efm.orderstore.domains.OrderCli;
 import com.efm.orderstore.domains.OrderItem;
 import com.efm.orderstore.domains.PaymentSlip;
@@ -14,7 +17,8 @@ import com.efm.orderstore.domains.enums.PaymentStatus;
 import com.efm.orderstore.repositories.OrderCliRepository;
 import com.efm.orderstore.repositories.OrderItemRepository;
 import com.efm.orderstore.repositories.PaymentRepository;
-import com.efm.orderstore.repositories.ProductRepository;
+import com.efm.orderstore.security.UserSS;
+import com.efm.orderstore.services.exceptions.AuthorizationException;
 import com.efm.orderstore.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -71,6 +75,16 @@ public class OrderCliService {
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		
 		return obj;
+	}
+	
+	public Page<OrderCli> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticatedUser();
+		if(user==null) {
+			throw new AuthorizationException("Access denied");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Client client = clientService.findById(user.getId());
+		return orderCliRepository.findByClient(client, pageRequest);
 	}
 	
 }
