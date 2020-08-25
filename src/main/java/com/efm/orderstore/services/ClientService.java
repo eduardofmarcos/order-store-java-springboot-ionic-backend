@@ -14,12 +14,15 @@ import org.springframework.stereotype.Service;
 import com.efm.orderstore.domains.Address;
 import com.efm.orderstore.domains.City;
 import com.efm.orderstore.domains.Client;
+import com.efm.orderstore.domains.enums.ClientProfile;
 import com.efm.orderstore.domains.enums.ClientType;
 import com.efm.orderstore.dto.ClientDTO;
 import com.efm.orderstore.dto.ClientNewDTO;
 import com.efm.orderstore.repositories.AddressRepository;
 import com.efm.orderstore.repositories.CityRepository;
 import com.efm.orderstore.repositories.ClientRepository;
+import com.efm.orderstore.security.UserSS;
+import com.efm.orderstore.services.exceptions.AuthorizationException;
 import com.efm.orderstore.services.exceptions.DataIntegrityException;
 import com.efm.orderstore.services.exceptions.ObjectNotFoundException;
 
@@ -37,6 +40,12 @@ public class ClientService {
 	private AddressRepository addressRepository;
 
 	public Client findById(Integer id) {
+		
+		UserSS user = UserService.authenticatedUser();
+		
+		if(user==null || !user.hasRole(ClientProfile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Access denied");
+		}
 		Optional<Client> obj = clientRepository.findById(id);
 		return obj.orElseThrow(
 				() -> new ObjectNotFoundException("Object not found. Id: " + id + ", Type: " + Client.class.getName()));

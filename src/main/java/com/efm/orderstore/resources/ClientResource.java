@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public class ClientResource {
 	ClientService clientService;
 
 	@GetMapping(value = "/{id}")
-	private ResponseEntity<?> findById(@PathVariable Integer id) {
+	public ResponseEntity<?> findById(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(clientService.findById(id));
 	}
 	
@@ -52,23 +53,25 @@ public class ClientResource {
 		obj = clientService.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-
+	@PostAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
-	private ResponseEntity<?> delete(@PathVariable Integer id) {
+	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		clientService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 
+	@PostAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping
-	private ResponseEntity<List<ClientDTO>> findAll() {
+	public ResponseEntity<List<ClientDTO>> findAll() {
 		List<Client> objList = clientService.findAll();
 		List<ClientDTO> categoryDTOList = objList.stream().map(el -> new ClientDTO(el))
 				.collect(Collectors.toList());
 		return ResponseEntity.ok().body(categoryDTOList);
 	}
 
+	@PostAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping(value = "/page")
-	private ResponseEntity<Page<ClientDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
+	public ResponseEntity<Page<ClientDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
