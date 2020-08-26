@@ -34,7 +34,7 @@ import com.efm.orderstore.repositories.StateRepository;
 
 @Service
 public class DBService {
-	
+
 	@Autowired
 	private BCryptPasswordEncoder pe;
 
@@ -68,7 +68,6 @@ public class DBService {
 		Category category8 = new Category(null, "Acessorios");
 		Category category9 = new Category(null, "Sofas");
 		Category category10 = new Category(null, "Bazar");
-	
 
 		Product p1 = new Product(null, "Computador", 2000.0);
 		Product p2 = new Product(null, "Mouse", 80.0);
@@ -80,8 +79,40 @@ public class DBService {
 		Product p8 = new Product(null, "Sofa", 80.0);
 		Product p9 = new Product(null, "Cama", 1500.0);
 		Product p10 = new Product(null, "Bule", 2000.0);
+		Product p11 = new Product(null, "Computador", 2000.0);
+		Product p12 = new Product(null, "Mouse", 80.0);
+		Product p13 = new Product(null, "TV", 1500.0);
+		Product p14 = new Product(null, "Mesa", 2000.0);
+		Product p15 = new Product(null, "Toalha", 80.0);
+		Product p16 = new Product(null, "Cafeteira", 1500.0);
+		Product p17 = new Product(null, "Maquina de lavar", 2000.0);
+		Product p18 = new Product(null, "Sofa", 80.0);
+		Product p19 = new Product(null, "Cama", 1500.0);
+		Product p20 = new Product(null, "Bule", 2000.0);
+		Product p21 = new Product(null, "Computador", 2000.0);
+		Product p22 = new Product(null, "Mouse", 80.0);
+		Product p23 = new Product(null, "TV", 1500.0);
+		Product p24 = new Product(null, "Mesa", 2000.0);
+		Product p25 = new Product(null, "Toalha", 80.0);
+		Product p26 = new Product(null, "Cafeteira", 1500.0);
+		Product p27 = new Product(null, "Maquina de lavar", 2000.0);
+		Product p28 = new Product(null, "Sofa", 80.0);
+		Product p29 = new Product(null, "Cama", 1500.0);
+		Product p30 = new Product(null, "Bule", 2000.0);
+		Product p31 = new Product(null, "Computador", 2000.0);
+		Product p32 = new Product(null, "Mouse", 80.0);
+		Product p33 = new Product(null, "TV", 1500.0);
+		Product p34 = new Product(null, "Mesa", 2000.0);
+		Product p35 = new Product(null, "Toalha", 80.0);
+		Product p36 = new Product(null, "Cafeteira", 1500.0);
+		Product p37 = new Product(null, "Maquina de lavar", 2000.0);
+		Product p38 = new Product(null, "Sofa", 80.0);
+		Product p39 = new Product(null, "Cama", 1500.0);
+		Product p40 = new Product(null, "Bule", 2000.0);
 
-		category1.getProducts().addAll(Arrays.asList(p1, p2, p3));
+		category1.getProducts()
+				.addAll(Arrays.asList(p1, p2, p3, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23,
+						p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p36, p37, p38, p39, p40));
 		category2.getProducts().addAll(Arrays.asList(p2, p4));
 		category3.getProducts().addAll(Arrays.asList(p5, p6));
 		category4.getProducts().addAll(Arrays.asList(p6, p7, p8));
@@ -94,10 +125,43 @@ public class DBService {
 		p6.getCategories().addAll(Arrays.asList(category3));
 		p7.getCategories().addAll(Arrays.asList(category4));
 		p8.getCategories().addAll(Arrays.asList(category4));
+		p10.getCategories().addAll(Arrays.asList(category1));
+		p11.getCategories().addAll(Arrays.asList(category1));
+		p12.getCategories().addAll(Arrays.asList(category1));
+		p13.getCategories().addAll(Arrays.asList(category1));
+		p14.getCategories().addAll(Arrays.asList(category1));
+		p15.getCategories().addAll(Arrays.asList(category1));
+		p16.getCategories().addAll(Arrays.asList(category1));
+		p17.getCategories().addAll(Arrays.asList(category1));
+		p18.getCategories().addAll(Arrays.asList(category1));
+		p19.getCategories().addAll(Arrays.asList(category1));
+		p20.getCategories().addAll(Arrays.asList(category1));
+		p21.getCategories().addAll(Arrays.asList(category1));
+		p22.getCategories().addAll(Arrays.asList(category1));
+		p23.getCategories().addAll(Arrays.asList(category1));
+		p24.getCategories().addAll(Arrays.asList(category1));
+		p25.getCategories().addAll(Arrays.asList(category1));
+		p26.getCategories().addAll(Arrays.asList(category1));
+		p27.getCategories().addAll(Arrays.asList(category1));
+		p28.getCategories().addAll(Arrays.asList(category1));
+		p29.getCategories().addAll(Arrays.asList(category1));
+		p30.getCategories().addAll(Arrays.asList(category1));
+		p31.getCategories().addAll(Arrays.asList(category1));
+		p32.getCategories().addAll(Arrays.asList(category1));
+		p33.getCategories().addAll(Arrays.asList(category1));
+		p34.getCategories().addAll(Arrays.asList(category1));
+		p35.getCategories().addAll(Arrays.asList(category1));
+		p36.getCategories().addAll(Arrays.asList(category1));
+		p37.getCategories().addAll(Arrays.asList(category1));
+		p38.getCategories().addAll(Arrays.asList(category1));
+		p39.getCategories().addAll(Arrays.asList(category1));
+		p40.getCategories().addAll(Arrays.asList(category1));
+		
 
 		categoryRepository.saveAll(Arrays.asList(category1, category2, category3, category4, category5, category6,
 				category7, category8, category9, category10));
-		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8));
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23,
+				p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p36, p37, p38, p39, p40));
 
 		State s1 = new State(null, "Minas Gerais");
 		State s2 = new State(null, "Sao paulo");
@@ -112,9 +176,11 @@ public class DBService {
 		stateRepository.saveAll(Arrays.asList(s1, s2));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		Client cli1 = new Client(null, "Maria Silva", "danesburrito@gmail.com", "1234234423", ClientType.PESSOAFISICA, pe.encode("batata"));
+		Client cli1 = new Client(null, "Maria Silva", "danesburrito@gmail.com", "1234234423", ClientType.PESSOAFISICA,
+				pe.encode("batata"));
 		cli1.getPhoneList().addAll(Arrays.asList("88842388", "42398749"));
-		Client cli2 = new Client(null, "Carlos Silva", "joao@gmail.com", "1234234423", ClientType.PESSOAFISICA, pe.encode("ameixa"));
+		Client cli2 = new Client(null, "Carlos Silva", "joao@gmail.com", "1234234423", ClientType.PESSOAFISICA,
+				pe.encode("ameixa"));
 		cli2.getPhoneList().addAll(Arrays.asList("23423432", "435345534"));
 		cli2.setPerfil(ClientProfile.ADMIN);
 
@@ -128,7 +194,7 @@ public class DBService {
 		clientRepository.saveAll(Arrays.asList(cli1));
 		clientRepository.saveAll(Arrays.asList(cli2));
 
-		addressRepository.saveAll(Arrays.asList(addr1, addr2,addr3));
+		addressRepository.saveAll(Arrays.asList(addr1, addr2, addr3));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
