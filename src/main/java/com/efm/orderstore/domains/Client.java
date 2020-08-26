@@ -33,7 +33,7 @@ public class Client implements Serializable {
 	private String email;
 	private String cpfOrCnpj;
 	private Integer clientType;
-	private String imgUrl;
+	
 	
 	@JsonIgnore
 	private String password;
@@ -175,12 +175,6 @@ public class Client implements Serializable {
 		return true;
 	}
 
-	public String getImgUrl() {
-		return imgUrl;
-	}
 
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
 
 }

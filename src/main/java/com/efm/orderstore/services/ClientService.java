@@ -1,10 +1,12 @@
 package com.efm.orderstore.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +32,12 @@ import com.efm.orderstore.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClientService {
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefix;
+	
+	@Autowired
+	private ImageService imageService;
 	
 	@Autowired
 	private S3Service s3Service;
@@ -128,13 +136,12 @@ public class ClientService {
 			throw new AuthorizationException("Access denied");
 		}
 		
-		URI uri = s3Service.uploadFile(multipartFile);
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
 		
-		Optional<Client> client = clientRepository.findById(user.getId());
-		Client cli = client.get();
-		cli.setImgUrl(uri.toString());
-		clientRepository.save(cli);
-		return uri;
+		String fileName = prefix + user.getId() + ".jpg";
+		
+		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+		
 	}
 
 }
