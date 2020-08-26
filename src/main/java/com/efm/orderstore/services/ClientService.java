@@ -1,5 +1,6 @@
 package com.efm.orderstore.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.efm.orderstore.domains.Address;
 import com.efm.orderstore.domains.City;
@@ -28,6 +30,9 @@ import com.efm.orderstore.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClientService {
+	
+	@Autowired
+	private S3Service s3Service;
 	
 	@Autowired
 	private BCryptPasswordEncoder pe;
@@ -115,6 +120,10 @@ public class ClientService {
 			newClient.getPhoneList().add(objDTO.getPhone3());
 		}
 		return newClient;
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 
 }
