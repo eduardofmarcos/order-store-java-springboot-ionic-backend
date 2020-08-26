@@ -123,7 +123,18 @@ public class ClientService {
 	}
 	
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
-		return s3Service.uploadFile(multipartFile);
+		UserSS user = UserService.authenticatedUser();
+		if(user==null) {
+			throw new AuthorizationException("Access denied");
+		}
+		
+		URI uri = s3Service.uploadFile(multipartFile);
+		
+		Optional<Client> client = clientRepository.findById(user.getId());
+		Client cli = client.get();
+		cli.setImgUrl(uri.toString());
+		clientRepository.save(cli);
+		return uri;
 	}
 
 }
