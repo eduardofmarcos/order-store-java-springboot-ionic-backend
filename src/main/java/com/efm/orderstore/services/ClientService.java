@@ -32,19 +32,19 @@ import com.efm.orderstore.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClientService {
-	
+
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
-	
+
 	@Value("${img.profile.size}")
 	private Integer size;
-	
+
 	@Autowired
 	private ImageService imageService;
-	
+
 	@Autowired
 	private S3Service s3Service;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder pe;
 
@@ -56,10 +56,10 @@ public class ClientService {
 	private AddressRepository addressRepository;
 
 	public Client findById(Integer id) {
-		
+
 		UserSS user = UserService.authenticatedUser();
-		
-		if(user==null || !user.hasRole(ClientProfile.ADMIN) && !id.equals(user.getId())) {
+
+		if (user == null || !user.hasRole(ClientProfile.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Access denied");
 		}
 		Optional<Client> obj = clientRepository.findById(id);
@@ -71,10 +71,24 @@ public class ClientService {
 		return clientRepository.findAll();
 	}
 
-//	public Client insert(Client obj) {
-//		obj.setId(null);
-//		return clientRepository.save(obj);
-//	}
+
+	public Client findByEmail(String email) {
+
+		UserSS user = UserService.authenticatedUser();
+		if (user == null || !user.hasRole(ClientProfile.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Access denied");
+		}
+		
+		System.out.println("before email search: "+ email);
+	
+		Client obj = clientRepository.findByEmail(email);
+		System.out.println("after email search: "+obj);
+		if (obj == null) {
+			throw new ObjectNotFoundException("User not founded: " + user.getId() + ", Type: " + Client.class.getName());
+		}
+		return obj;
+
+	}
 
 	public Client update(Client obj) {
 		Client newObj = findById(obj.getId());
@@ -132,22 +146,22 @@ public class ClientService {
 		}
 		return newClient;
 	}
-	
+
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
 		UserSS user = UserService.authenticatedUser();
-		if(user==null) {
+		if (user == null) {
 			throw new AuthorizationException("Access denied");
 		}
-		
+
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
-		
+
 		jpgImage = imageService.cropSquare(jpgImage);
 		jpgImage = imageService.resize(jpgImage, size);
-		
+
 		String fileName = prefix + user.getId() + ".jpg";
-		
+
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
-		
+
 	}
 
 }
